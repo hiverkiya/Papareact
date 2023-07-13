@@ -12,9 +12,9 @@ function Product({ id, title, price }) {
   };
   return (
     <div onClick={addProductToBasket}>
-      <h3>
+      <button>
         {title}-${price}
-      </h3>
+      </button>
     </div>
   );
 }
