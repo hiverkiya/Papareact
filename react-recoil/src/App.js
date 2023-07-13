@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
 import Message from "./Message";
+import { atom, useRecoilState } from "recoil";
+import { userState } from "./Atoms/userState";
+
+
 function App() {
-  const [user, setUser] = useState({
-    name: "Sonny",
-    age: 26,
-    isMale: true,
-  });
+  const [user, setUser] = useRecoilState(userState);
 
   return (
     <div className="App">
