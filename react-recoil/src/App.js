@@ -5,10 +5,16 @@ import { userState } from "./Atoms/userState";
 import { basketItemsTotal, basketState } from "./Atoms/basketState";
 import Quote from "./Quote";
 import Product from "./Product";
+import { ClimbingBoxLoader, PacmanLoader } from "react-spinners";
 function App() {
   const [user, setUser] = useRecoilState(userState);
   const basket = useRecoilValue(basketState);
-  const total = useRecoilValue(basketItemsTotal);
+  const [tax, setTax] = useState(true);
+  const total = useRecoilValue(
+    basketItemsTotal({
+      addTax: tax,
+    })
+  );
 
   const login = (e) => {
     setUser({
@@ -24,13 +30,17 @@ function App() {
       <Message user={user} />
       <button onClick={login}>Log in</button>
       <h4> Items in your basket {basket.items.length}</h4>
-      <h5>Total of items ${total}</h5>
+      
+      <h5>
+        Total of items ${total} (Tax is {tax ? "Included" : "Excluded"})
+      </h5>
       <Product id={3434} title={"iPhone"} price={1000.99} />
       <Product id={32424} title={"iPhone Pro"} price={1200.99} />
       <Product id={45353} title={"iPhone Dummy"} price={100.99} />
-
+      
       <h1> Quotes</h1>
-      <Suspense fallback={<h1>LOADING LOADING LOADING</h1>}>
+      <br />
+      <Suspense fallback={<PacmanLoader color="blue" />}>
         <Quote />
       </Suspense>
     </div>
