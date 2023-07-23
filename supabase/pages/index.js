@@ -2,11 +2,24 @@ import { useEffect, useState } from "react"
 import supabase from "../supabase"
 import { userTable } from "@/constants/database";
 import useAuth from "@/hooks/useAuth";
+import AddProduct from "../components/AddProduct";
 export default function Home() {
 const [users, setUsers]=useState([])
 const [email,setEmail] = useState('')
 const [password,setPassword]=useState('')
-const {signIn,signUp,user,loading}=useAuth()
+const {signIn,signUp,user,signOut,loading}=useAuth()
+const [products,setProducts]=useState([])
+
+useEffect(()=>{
+  const mySubscription=supabase.channel("Product").on("INSERT",(payload)=>{
+    console.log("change received",payload)
+    setProducts(payload)
+  }).subscribe();
+  
+  return()=>{
+    mySubscription.unsubscribe();
+  }
+},[supabase])
 useEffect(()=>{
     const fetchUsers=async()=>{
       const {data,error}=await supabase.from(userTable).select();
@@ -19,8 +32,10 @@ useEffect(()=>{
 const logIn=(e)=>{
 e.preventDefault();
 signIn(email,password)
-
+setEmail("")
+setPassword("")
 }
+
 
 
   return (
@@ -31,20 +46,20 @@ signIn(email,password)
         placeholder="Email" onChange={(e)=>setEmail(e.target.value)}/>
         <input type="password" value={password}
         onChange={(e)=>setPassword(e.target.value)} placeholder="Password"/>
-        {
-          loading?(<p>LOADING...</p>):(
-            <>
+         <button className="p-1 bg-blue-300" onClick={signOut}>Sign out</button>
+           
             <button className="p-2 bg-green-400" type="submit" onClick={logIn}>Sign In</button>
        <button className="p-2 bg-red-400" onClick={signUp}>Sign Up</button>
-      
-            </>
-          )
-        }
+           
+          
+        
        </form>
     </div>
     {users.map(({id,name,age})=>( //destructuring
       <div key={id}><p>{name} is {age} years old</p></div>
     ))}
+
+    <AddProduct/>
     </div>
   )
 }

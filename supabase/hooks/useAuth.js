@@ -37,6 +37,12 @@ setLoading(true)
     email,password,
   }).catch((error)=>setError(error)).finally(()=>setLoading(false))
   }
+
+const signOut=async()=>{
+  setLoading(true)
+ await supabase.auth.signOut().catch(error=>setError(error)).finally(()=>setLoading(false));
+}
+
   const signIn=async(email,password)=>{
     setLoading(true)
     await supabase.auth.signInWithPassword({
@@ -48,6 +54,7 @@ const memoedValue=useMemo(
     user,
     signIn,
     signUp,
+    signOut,
     error,loading,
   })
 ,[user,loading,error])
