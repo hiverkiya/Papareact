@@ -31,9 +31,16 @@ signIn(email,password)
         placeholder="Email" onChange={(e)=>setEmail(e.target.value)}/>
         <input type="password" value={password}
         onChange={(e)=>setPassword(e.target.value)} placeholder="Password"/>
-       <button className="p-2 bg-green-400" type="submit" onClick={logIn}>Sign In</button>
+        {
+          loading?(<p>LOADING...</p>):(
+            <>
+            <button className="p-2 bg-green-400" type="submit" onClick={logIn}>Sign In</button>
        <button className="p-2 bg-red-400" onClick={signUp}>Sign Up</button>
-      </form>
+      
+            </>
+          )
+        }
+       </form>
     </div>
     {users.map(({id,name,age})=>( //destructuring
       <div key={id}><p>{name} is {age} years old</p></div>

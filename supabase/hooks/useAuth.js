@@ -38,6 +38,7 @@ setLoading(true)
   }).catch((error)=>setError(error)).finally(()=>setLoading(false))
   }
   const signIn=async(email,password)=>{
+    setLoading(true)
     await supabase.auth.signInWithPassword({
       email,password
     }).catch((error)=>setError(error)).finally(()=>setLoading(false))
@@ -49,7 +50,7 @@ const memoedValue=useMemo(
     signUp,
     error,loading,
   })
-,[user])
+,[user,loading,error])
 
 return(
   <AuthContext.Provider value={memoedValue}>
