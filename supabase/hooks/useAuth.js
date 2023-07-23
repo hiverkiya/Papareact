@@ -6,6 +6,13 @@ export function AuthProvider({children}) {
 const [error,setError]=useState(null)
 const [initialLoading, setInitialLoading]=useState(true)
 const [loading, setLoading]=useState(false)
+
+useEffect(()=>{
+const user=supabase.auth.getUser();
+setUser(user)
+setInitialLoading(false)
+},[supabase])
+
 useEffect(()=>{
  const {data,error}=supabase.auth.onAuthStateChange((event,session)=>{
   console.log(event,session)
@@ -19,7 +26,6 @@ useEffect(()=>{
  }
  )
  if(error)setError(error)
- setInitialLoading(false)
  return()=>{
   data.subscription.unsubscribe()
  }
