@@ -1,5 +1,5 @@
 import React from 'react'
-
+import {notFound} from 'next/navigation'
 type Props={
     params:{
         id:string;
@@ -22,6 +22,10 @@ async function ProductPage({params:{id}}:Props) {
 const res=await fetch(`https://dummyjson.com/products/${id}`)
 
 const product:Product=await res.json()
+
+if(!product.id) 
+    notFound()
+
     return (
         <div>
     <div>ProductPage with ID:{id}</div> 
