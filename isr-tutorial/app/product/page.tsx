@@ -1,6 +1,10 @@
 import React from 'react'
 
-function Products() {
+async function Products() {
+await new Promise((resolve)=>{
+  setTimeout(()=>resolve("done!"),1000)
+})
+
   return (
     <div>Products</div>
   )
