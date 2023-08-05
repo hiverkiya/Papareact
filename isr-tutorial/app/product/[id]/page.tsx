@@ -1,5 +1,6 @@
 import React from 'react'
 import {notFound} from 'next/navigation'
+import Product from '@/components/Product';
 type Props={
     params:{
         id:string;
@@ -29,8 +30,7 @@ if(!product.id)
     return (
         <div>
     <div>ProductPage with ID:{id}</div> 
-    <div> Product is {product.title}</div>
-  <div>Product price is ${product.price}</div>
+    <Product product={product}/>
     </div>)
 }
 
