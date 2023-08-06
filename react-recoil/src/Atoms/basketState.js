@@ -13,9 +13,9 @@ export const basketItemsTotal = selectorFamily({
     (options) =>
     ({ get }) => {
       const basket = get(basketState);
-      let  totalPrice = basket.items.reduce(
+      let totalPrice = basket.items.reduce(
         (total, item) => item.price + total,
-        0
+        0,
       );
       if (options.addTax) {
         totalPrice = totalPrice * 1.2;

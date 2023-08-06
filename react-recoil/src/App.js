@@ -13,7 +13,7 @@ function App() {
   const total = useRecoilValue(
     basketItemsTotal({
       addTax: tax,
-    })
+    }),
   );
 
   const login = (e) => {
@@ -30,14 +30,14 @@ function App() {
       <Message user={user} />
       <button onClick={login}>Log in</button>
       <h4> Items in your basket {basket.items.length}</h4>
-      
+
       <h5>
         Total of items ${total} (Tax is {tax ? "Included" : "Excluded"})
       </h5>
       <Product id={3434} title={"iPhone"} price={1000.99} />
       <Product id={32424} title={"iPhone Pro"} price={1200.99} />
       <Product id={45353} title={"iPhone Dummy"} price={100.99} />
-      
+
       <h1> Quotes</h1>
       <br />
       <Suspense fallback={<PacmanLoader color="blue" />}>

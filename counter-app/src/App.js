@@ -1,12 +1,12 @@
-import {useState} from "react"
+import { useState } from "react";
 
 function App() {
-  const [count,setCount]=useState(0);
-  function incre(){
-    setCount(count+1);
+  const [count, setCount] = useState(0);
+  function incre() {
+    setCount(count + 1);
   }
-  function decre(){
-    setCount(count-1);
+  function decre() {
+    setCount(count - 1);
   }
   return (
     <div className="App">
