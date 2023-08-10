@@ -6,6 +6,7 @@ const GET_USERS = gql`
         name
         id
         username
+        email
       }
     }
   }
