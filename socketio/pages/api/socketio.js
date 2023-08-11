@@ -6,9 +6,9 @@ export default function socketIOHandler(req, res) {
     const io = new Server(res.socket.server);
 
     io.on("connection", (socket) => {
-      socket.broadcast.emit("a user connected");
-      socket.on("ping", (msg) => {
-        socket.emit("pong");
+      socket.broadcast.emit("a user joined the chat");
+      socket.on("message", (msg) => {
+        socket.broadcast.emit("message_recieved", msg);
         console.log(msg);
       });
     });
