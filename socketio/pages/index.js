@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 export default function Home() {
   const [socket, setSocket] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
+  const [username, setUsername] = useState(null);
   const [messages, setMessages] = useState([]);
   const messageRef = useRef(null);
   useEffect(() => {
@@ -35,9 +36,18 @@ export default function Home() {
     };
   }, [messages]);
 
-  const sendMessage = () => {
+  useEffect(() => {
+    let username = null;
+    while (username === null) {
+      username = prompt("Enter a username");
+    }
+    setUsername(username);
+  }, []);
+
+  const sendMessage = (e) => {
+    e.preventDefault();
     console.log("PING SENT");
-    socket.emit("message", messageRef.current.value);
+    socket.emit("message", `${username} says : ${messageRef.current.value}`);
     setMessages([...messages, messageRef.current.value]);
     messageRef.current.value = "";
   };
@@ -46,6 +56,7 @@ export default function Home() {
     <div className="flex space-y-1 flex-col items-center justify-center min-h-screen py-2">
       <div className="text-5xl"> Socket IO DEMO</div>
       <div className="text-xl"> I am on the Client</div>
+      <h2>Welcome to the chat {username}</h2>
       <input
         className="border-black border rounded-lg text-center"
         ref={messageRef}
