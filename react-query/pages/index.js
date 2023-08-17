@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Image from "next/image";
 import { useState } from "react";
-import { useQuery, useQueryClient } from "react-query";
+import { useQueries, useQuery, useQueryClient } from "react-query";
 export default function Home() {
   // const { isLoading, error, data } = useQuery("repoData", () =>
   //   fetch("https://api.github.com/repos/tannerlinsley/react-query").then(
@@ -27,10 +27,26 @@ export default function Home() {
   //   },
   //   { staleTime: 10000 }
   // );
-  const basket = useQuery("basket", () => [], {
-    initialData: () => queryClient.getQueryData("basket"),
-    staleTime: Infinity,
-  });
+  // const basket = useQuery("basket", () => [], {
+  //   initialData: () => queryClient.getQueryData("basket"),
+  //   staleTime: Infinity,
+  // });
+
+  // 7 different calls, persisted for an hour
+  const products = [1, 2, 3, 4, 5, 6, 7];
+  const productQueries = useQueries(
+    products.map((product) => {
+      return {
+        queryKey: ["product", product],
+        queryFn: async () =>
+          await fetch(`https://fakestoreapi.com/products/${product}`).then(
+            (res) => res.json()
+          ),
+        staleTime: 1000 * 60 * 60,
+      };
+    })
+  );
+
   return (
     <div className=" flex flex-col items-center justify-center min-h-screen py-2">
       <div>Hello</div>
