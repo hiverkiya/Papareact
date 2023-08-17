@@ -78,13 +78,13 @@ export default function Home() {
       <button onClick={() => setProductId(3)}> Set Product ID to 3</button> */}
 
       <Header />
-      <button
+      {/* <button
         onClick={() =>
           queryClient.setQueryData("basket", [...basket.data, "ipad"])
         }
       >
         Add an iPad
-      </button>
+      </button> */}
     </div>
   );
 }
