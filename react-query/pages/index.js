@@ -1,6 +1,8 @@
+"use-client";
+import Header from "@/components/Header";
 import Image from "next/image";
+import { useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
-
 export default function Home() {
   // const { isLoading, error, data } = useQuery("repoData", () =>
   //   fetch("https://api.github.com/repos/tannerlinsley/react-query").then(
@@ -8,15 +10,28 @@ export default function Home() {
   //   )
   // );
   const queryClient = useQueryClient();
-  const { isLoadingTodo, errorTodo, data } = useQuery("todos", () => [
-    "Himanshu",
-  ]);
-
-  const postTodo = (e) => {
-    e.preventDefault();
-    queryClient.setQueryData("todos", [...data, "Take dogs out"]);
-  };
-
+  // const { isLoadingTodo, errorTodo, data } = useQuery("todos", () => [
+  //   "Himanshu",
+  // ]);
+  // const postTodo = (e) => {
+  //   e.preventDefault();
+  //   queryClient.setQueryData("todos", [...data, "Take dogs out"]);
+  // };
+  // const [productId, setProductId] = useState(1);
+  // const { data, isFetching } = useQuery(
+  //   ["products", productId],
+  //   async () => {
+  //     console.log("FETCHING PRODUCT", productId);
+  //     return await fetch(`https://fakestoreapi.com/products/${productId}`).then(
+  //       (res) => res.json()
+  //     );
+  //   },
+  //   { staleTime: 10000 }
+  // );
+  const basket = useQuery("basket", () => [], {
+    initialData: () => queryClient.getQueryData("basket"),
+    staleTime: Infinity,
+  });
   return (
     <div className=" flex flex-col items-center justify-center min-h-screen py-2">
       <div>Hello</div>
@@ -33,15 +48,29 @@ export default function Home() {
           </div>
         </>
       )} */}
-
-      <div>
-        {" "}
+      {/* <button onClick={postTodo}>Add a Todo</button>
+      {/* <div> */}
+      {/* {" "}
         <h1>TODO</h1>
         {data?.map((todo) => (
           <p>{todo}</p>
         ))}
-        <button onClick={postTodo}>Add a Todo</button>
-      </div>
+      </div> */}
+      {/* <h1>Now selected {productId}</h1>
+      {isFetching && <h2>Refetching</h2>}
+      <button onClick={() => setProductId(1)}> Set Product ID to 1</button>
+      <button onClick={() => setProductId(2)}> Set Product ID to 2</button>
+      <button onClick={() => setProductId(3)}> Set Product ID to 3</button> */}
+
+      <p>*******************************************</p>
+      <Header />
+      <button
+        onClick={() =>
+          queryClient.setQueryData("basket", [...basket.data, "ipad"])
+        }
+      >
+        Add an iPad
+      </button>
     </div>
   );
 }
