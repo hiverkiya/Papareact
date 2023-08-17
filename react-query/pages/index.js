@@ -1,4 +1,3 @@
-"use-client";
 import Header from "@/components/Header";
 import Image from "next/image";
 import { useState } from "react";
@@ -62,7 +61,6 @@ export default function Home() {
       <button onClick={() => setProductId(2)}> Set Product ID to 2</button>
       <button onClick={() => setProductId(3)}> Set Product ID to 3</button> */}
 
-      <p>*******************************************</p>
       <Header />
       <button
         onClick={() =>
